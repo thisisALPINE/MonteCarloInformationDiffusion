@@ -1,0 +1,6 @@
+# Number of nodes: 10000
+# Number of edges in Barabasi graph: 3
+# Messages 	 Different initial 	 Similar Initial 	 y_high_diff 	 y_low_diff 	 y_high_sim 	 y_low_sim 
+1	56.377979	44.36626800000001	49.538	63.6232	36.0645	53.1884
+2	62.389136999999984	49.68911299999999	52.5936	71.8184	40.0273	60.1283
+3	62.13245399999998	50.51650299999999	50.9472	72.2897	38.263	61.1065
