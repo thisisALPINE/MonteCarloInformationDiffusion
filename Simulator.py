@@ -2,7 +2,7 @@
 # author: Yu Fu, Louise A. Dennis
 # Update version used for large network(>99/use Networkx)
 
-from DTMCSN import Infection_Model, generate_graph
+from DTMCSN import Infection_Model, Threshold_Model, generate_graph
 import sys
 import random
     
@@ -52,12 +52,12 @@ for seed in seed_list:
         fr.write(str(m + 1))
         fr.write("\t")
         experiment = 0
-        vd  = Infection_Model(nodes, G, prob1, prob2, (m + 1)*nodes, runs, experiment)
+        vd  = Threshold_Model(nodes, G, prob1, prob2, (m + 1)*nodes, runs, experiment)
         pn_diff[m].append(vd)
         fr.write(str(vd))
         fr.write("\t")
         experiment = 1
-        vs  = Infection_Model(nodes, G, prob1, prob2, (m + 1)*nodes, runs, experiment)
+        vs  = Threshold_Model(nodes, G, prob1, prob2, (m + 1)*nodes, runs, experiment)
         pn_sim[m].append(vs)
         fr.write(str(vs))
         fr.write("\n")

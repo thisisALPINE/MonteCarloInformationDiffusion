@@ -19,7 +19,63 @@ def generate_graph(nodes, edges, seed):
     # Show the graph of the network(structure)
     # plt.show()
     return G
-    
+
+def Threshold_Model(nodes, graph, probability_indifferent, prob_idea, messages, runs, sim_diff):
+
+    threshold = 2
+
+    # Setup and initialize infected connections count array
+    infected_connections_count = []
+    for node in range(nodes):
+        infected_connections_count.append(0)
+
+    # Generate seeds, make sure there are no duplicates
+    seeds = 3
+    infected_nodes = []
+    while len(infected_nodes) < seeds:
+        seed = random.randint(0, nodes - 1)
+        if seed not in infected_nodes:
+            infected_nodes.append(seed)
+
+    # Iterate through initial seeds and establish a first infection round
+    for seed in infected_nodes:
+        for neighbour in graph.neighbors(seed):
+            infected_connections_count[neighbour] += 1
+
+    print("Starting with " + str(seeds) + " seeds, ( " + str(infected_nodes) + " )threshold is " + str(threshold))
+    # Iteratively infect nodes that cross a set threshold
+    for i in range(10):
+        new_infected_nodes = []
+        for elem in enumerate(infected_connections_count):
+            # elem is a tuple (index, number_of_infected_connections)
+            if elem[1] >= threshold and elem[0] not in infected_nodes:
+                # Probabilistic extension
+                total_neighbours = len([item for item in graph.neighbors(elem[0])])
+                infected_neighbours = elem[1]
+                infection_probability = infected_neighbours / total_neighbours
+                outcome = infect_or_not_infect(infection_probability)
+
+                if outcome:
+                    new_infected_nodes.append(elem[0])
+                    infected_nodes.append(elem[0])
+
+        print("ROUND " + str(i) + ": !!! NEW INFECTED NODES: " + str(new_infected_nodes))
+        for node in new_infected_nodes:
+            for neighbour in graph.neighbors(node):
+                infected_connections_count[neighbour] += 1
+
+    print("connections_count array: " + str(infected_connections_count))
+    print("infected nodes: " + str(infected_nodes))
+
+    return 0
+
+
+def infect_or_not_infect(probability):
+    outcomes = [0, 1]
+    outcome = random.choices(outcomes, weights=(1 - probability, probability), k=1)
+    if outcome == [1]:
+        return True
+    return False
 
 def Infection_Model(nodes, graph, probability_indifferent, prob_idea, messages, runs, sim_diff):
 
